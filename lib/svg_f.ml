@@ -888,9 +888,16 @@ struct
   let a_strokeopacity =
     user_attrib string_of_number "stroke-opacity"
 
-  (* also generated *)
-  let svg = star "svg"
+  let svg ?a x =
+    let xlink_ns = string_attrib "xmlns:xlink" (W.return "http://www.w3.org/1999/xlink")
+    in
+    let attrs = match a with
+      | None -> []
+      | Some attrs -> attrs
+    in
+    star "svg" ~a:(xlink_ns :: attrs) x
 
+  (* also generated *)
   let g = star "g"
 
   let defs = star "defs"
